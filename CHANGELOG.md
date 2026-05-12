@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/alexmuller/test-release-please/compare/v1.0.0...v1.0.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* something again ([ca40d08](https://github.com/alexmuller/test-release-please/commit/ca40d086d6b3051828c3b119e0cb9d22f518ed86))
+
 ## 1.0.0 (2026-05-12)
 
 
