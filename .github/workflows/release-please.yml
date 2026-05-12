@@ -12,14 +12,31 @@ name: release-please
 
 jobs:
   release-please:
+    name: Release Please – allocate version number
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # if: github.event.pull_request.draft != true
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+      sha: ${{ steps.release.outputs.sha }}
+      version: ${{ steps.release.outputs.version }}
     steps:
-      - uses: googleapis/release-please-action@v4
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Run Release Please
+        id: release
+        uses: googleapis/release-please-action@v4
         with:
           # this assumes that you have created a personal access token
           # (PAT) and configured it as a GitHub action secret named
           # `MY_RELEASE_PLEASE_TOKEN` (this secret name is not important).
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
-          # this is a built-in strategy in release-please, see "Action Inputs"
-          # for more options
+          # Release type for .NET/C# projects
           release-type: simple
+      - name: Print Release Please Outputs
+        run: |
+          echo "release_created=${{ steps.release.outputs.release_created }}"
+          echo "tag_name=${{ steps.release.outputs.tag_name }}"
+          echo "sha=${{ steps.release.outputs.sha }}"
+          echo "version=${{ steps.release.outputs.version }}"
